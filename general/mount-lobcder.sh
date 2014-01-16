@@ -1,17 +1,11 @@
 #!/bin/sh
 
-# mount-lobcder.sh
-
-# Options:
-#   -h, --help
-#   -l, --lobcder-url
-#   -m, --mount-point
-#   -u, --username
-#   -p, --password
-
-
 export LOBCDER_URL=http://149.156.10.138:8080/lobcder/dav
 export LOBCDER_DIR=/media/lobcder
+
+get_param() {
+    return `echo $1 | sed -e 's/^[^=]*=//g'`
+}
 
 if which mount.davfs >/dev/null; then
     echo -n ''
@@ -25,10 +19,10 @@ while test $# -gt 0; do
         -h|--help)
             echo "options:"
             echo "-h, --help                show this help"
-            echo "-l, --lobcder-url=URL     LOBCDER URL (default: http://149.156.10.138:8080/lobcder/dav)"
+            echo "-l, --lobcder-url=URL     LOBCDER url (default: http://149.156.10.138:8080/lobcder/dav)"
             echo "-m, --mount-point=DIR     mount point (default: /media/lobcder)"
-            echo "-u, --username=USER       LOBCDER username"
-            echo "-p, --password=PASS       LOBCDER token"
+            echo "-u, --username=USER       username"
+            echo "-t, --token=TOKEN         token"
             exit 0
             ;;
         -l)
@@ -36,13 +30,13 @@ while test $# -gt 0; do
             if test $# -gt 0; then
                 export LOBCDER_URL=$1
             else
-                echo "no LOBCDER URL specified"
+                echo "no LOBCDER url specified"
                 exit 1
             fi
             shift
             ;;
         --lobcder-url*)
-            export LOBCDER_URL=`echo $1 | sed -e 's/^[^=]*=//g'`
+            export LOBCDER_URL=`get_param $1`
             shift
             ;;
         -m)
@@ -56,7 +50,7 @@ while test $# -gt 0; do
             shift
             ;;
         --mount-point*)
-            export LOBCDER_DIR=`echo $1 | sed -e 's/^[^=]*=//g'`
+            export LOBCDER_DIR=`get_param $1`
             shift
             ;;
         -u)
@@ -70,21 +64,21 @@ while test $# -gt 0; do
             shift
             ;;
         --username*)
-            export LOBCDER_USER=`echo $1 | sed -e 's/^[^=]*=//g'`
+            export LOBCDER_USER=`get_param $1`
             shift
             ;;
-        -p)
+        -t)
             shift
             if test $# -gt 0; then
-                export LOBCDER_PASS=$1
+                export LOBCDER_TOKEN=$1
             else
-                echo "no password specified"
+                echo "no token specified"
                 exit 1
             fi
             shift
             ;;
-        --password*)
-            export LOBCDER_PASS=`echo $1 | sed -e 's/^[^=]*=//g'`
+        --token*)
+            export LOBCDER_TOKEN=`get_param $1`
             shift
             ;;
         *)
@@ -93,22 +87,20 @@ while test $# -gt 0; do
     esac
 done
 
-if [ -z "$LOBCDER_USER" ]; then
-    echo "no username specified, use -u|--username=USER"
+if [ -z "${LOBCDER_USER}" ]; then
+    echo "no user specified, use -u|--username=USER"
     exit 1
 fi
 
-if [ -z "$LOBCDER_PASS" ]; then
-    echo "no password specified, use -p|--password=PASS"
+if [ -z "${LOBCDER_TOKEN}" ]; then
+    echo "no token specified, use -t|--token=TOKEN"
     exit 1
 fi
 
-if [ ! -d "$LOBCDER_DIR" ]; then
-    mkdir -p $LOBCDER_DIR
+if [ ! -d "${LOBCDER_DIR}" ]; then
+    mkdir -p ${LOBCDER_DIR}
 fi
 
 echo "$LOBCDER_USER
-$LOBCDER_PASS
-" | mount.davfs $LOBCDER_URL $LOBCDER_DIR
-
-
+$LOBCDER_TOKEN
+" | mount.davfs ${LOBCDER_URL} ${LOBCDER_DIR}

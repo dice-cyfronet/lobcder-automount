@@ -1,0 +1,8 @@
+# Used to short token (default: http://149.156.10.138:8080/lobcder/urest/getshort)
+LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
+
+# Remote WebDAV point (default: http://149.156.10.138:8080/lobcder/dav)
+LOBCDER_URL=http://149.156.10.138:8080/lobcder/dav
+
+# Local mount point (default: /media/lobcder)
+LOBCDER_DIR=/media/lobcder
