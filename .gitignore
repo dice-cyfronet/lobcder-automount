@@ -2,9 +2,8 @@
 *.iml
 *.ipr
 *.iws
-tmp/
-
-*.spec
 
 *.deb
+*.pkg.tar.xz
 *.rpm
+*.tar

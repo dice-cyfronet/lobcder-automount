@@ -1,28 +1,19 @@
 #! /bin/bash
 
-### BEGIN INIT INFO
-# Provides:          lobcderd
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Mount LOBCDER at boot time
-# Description:       Allow to use VPH-Share resou${PIDFILE}file system.
-### END INIT INFO
-
 # Author: Pawel Suder <pawel@suder.info>
 
-. /lib/lsb/init-functions
+. /etc/rc.conf
+. /etc/rc.d/functions
 
 export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
 export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
 export LOBCDER_MOUNT_URL=http://149.156.10.138:8080/lobcder/dav
 export LOBCDER_DIR=/media/lobcder
 
-[ -r /etc/default/lobcderd.conf ] && . /etc/default/lobcderd.conf
+[ -r /etc/conf.d/lobcderd ] && . /etc/conf.d/lobcderd
 
 get_ticket() {
-    echo $1
+    return $1
 }
 
 [ -r /etc/lobcderd/parse_ticket.sh ] && . /etc/lobcderd/parse_ticket.sh
@@ -39,7 +30,7 @@ check_if_mounted()
 mount_lobcder()
 {
     export LOBCDER_LONG_TOKEN=`curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
-    export LOBCDER_LONG_TOKEN=$(get_ticket ${LOBCDER_LONG_TOKEN})
+    export LOBCDER_LONG_TOKEN=`get_ticket ${LOBCDER_LONG_TOKEN}`
     export LOBCDER_TOKEN=`curl ${LOBCDER_SHORT_TOKEN_URL}/${LOBCDER_LONG_TOKEN} 2>/dev/null`
     export COUNTER=10
 

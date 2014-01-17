@@ -21,3 +21,5 @@
 . /etc/init.d/functions
 
 [ -r /etc/sysconfig/lobcderd ] && . /etc/sysconfig/lobcderd
+
+echo "Still deploying..."
