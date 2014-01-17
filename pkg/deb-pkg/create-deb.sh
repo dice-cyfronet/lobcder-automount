@@ -8,7 +8,7 @@ Version: 0.1
 Maintainer: Pawel Suder <pawel@suder.info>
 Depends: davfs2
 Architecture: all
-Files: lobcderd.conf /etc/default/lobcderd
+Files: lobcderd.conf /etc/default
     lobcderd /etc/init.d
 
 File: postinst

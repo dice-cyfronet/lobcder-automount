@@ -12,7 +12,7 @@
 
 # Author: Pawel Suder <pawel@suder.info>
 
-[ -r /etc/default/lobcderd ] && . /etc/default/lobcderd
+[ -r /etc/default/lobcderd.conf ] && . /etc/default/lobcderd.conf
 
 . /lib/lsb/init-functions
 
