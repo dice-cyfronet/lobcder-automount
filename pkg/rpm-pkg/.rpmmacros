@@ -1,0 +1,4 @@
+%_topdir               /home/rpmbuild/rpm
+%_tmppath              /home/rpmbuild/rpm/tmp
+%_smp_mflags  -j3
+%__arch_install_post   /usr/lib/rpm/check-rpaths   /usr/lib/rpm/check-buildroot

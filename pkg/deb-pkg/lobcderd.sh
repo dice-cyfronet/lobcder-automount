@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 ### BEGIN INIT INFO
 # Provides:          lobcderd
@@ -12,7 +12,7 @@
 
 # Author: Pawel Suder <pawel@suder.info>
 
-[ -r /etc/default/lobcderd ] && . /etc/default/lobcderd
+[ -r /etc/default/lobcderd.conf ] && . /etc/default/lobcderd.conf
 
 check_if_mounted()
 {
@@ -27,14 +27,28 @@ mount_lobcder()
 {
     export LOBCDER_LONG_TOKEN=`curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
     export LOBCDER_TOKEN=`curl ${LOBCDER_SHORT_TOKEN_URL}/${LOBCDER_LONG_TOKEN} 2>/dev/null`
-    while check_if_mounted
+    export COUNTER=10
+
+    if [ ! -d "${LOBCDER_DIR}" ]; then
+        mkdir -p ${LOBCDER_DIR}
+    fi
+
+    while check_if_mounted && [ ${COUNTER} -gt 0 ]
     do
         echo -n ". "
         echo "user
 $LOBCDER_TOKEN
 " | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} > /dev/null 2>&1
         sleep 1
+        let COUNTER=COUNTER-1
     done
+
+    if check_if_mounted
+    then
+        echo -n "not mounted. "
+    else
+        echo -n "mounted. "
+    fi
 }
 
 umount_lobcder()
@@ -83,5 +97,3 @@ case "$1" in
         exit 3
         ;;
 esac
-
-:
