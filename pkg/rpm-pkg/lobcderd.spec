@@ -25,8 +25,10 @@ install -m 0644 lobcderd.conf $RPM_BUILD_ROOT/etc/default/lobcderd.conf
 rm -rf $RPM_BUILD_ROOT
 %post
 chkconfig --add lobcderd
+service lobcderd start
 %preun
 chkconfig --del lobcderd
+service lobcderd stop
 %files
 %dir /etc/lobcderd
 /etc/lobcderd/get_ticket.sh
