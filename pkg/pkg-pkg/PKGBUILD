@@ -4,4 +4,4 @@ pkgver=0.0.1
 pkgrel=1
 pkgdesc="Automount LOBCDER VPH-Share resource"
 arch=any
-depends=('davfs')
+depends=('davfs' 'curl')
