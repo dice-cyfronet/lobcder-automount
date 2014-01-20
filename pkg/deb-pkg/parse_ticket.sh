@@ -1,5 +1,6 @@
 #!/bin/sh
 
-get_ticket() {
+parse_ticket()
+{
     echo $1
 }

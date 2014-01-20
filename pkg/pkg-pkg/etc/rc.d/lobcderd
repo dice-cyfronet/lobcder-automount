@@ -2,8 +2,8 @@
 
 # Author: Pawel Suder <pawel@suder.info>
 
-. /etc/rc.conf
-. /etc/rc.d/functions
+[ -r /etc/rc.conf ] && . /etc/rc.conf
+[ -r /etc/rc.d/functions ] && . /etc/rc.d/functions
 
 export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
 export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort

@@ -21,7 +21,15 @@ export LOBCDER_DIR=/media/lobcder
 
 [ -r /etc/default/lobcderd.conf ] && . /etc/default/lobcderd.conf
 
-get_ticket() {
+get_ticket()
+{
+    echo `curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
+}
+
+[ -r /etc/lobcderd/get_ticket.sh ] && . /etc/lobcderd/get_ticket.sh
+
+parse_ticket()
+{
     echo $1
 }
 
@@ -38,8 +46,8 @@ check_if_mounted()
 
 mount_lobcder()
 {
-    export LOBCDER_LONG_TOKEN=`curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
-    export LOBCDER_LONG_TOKEN=$(get_ticket ${LOBCDER_LONG_TOKEN})
+    export LOBCDER_LONG_TOKEN=$(get_ticket ${LOBCDER_USER_DATA_URL})
+    export LOBCDER_LONG_TOKEN=$(parse_ticket ${LOBCDER_LONG_TOKEN})
     export LOBCDER_TOKEN=`curl ${LOBCDER_SHORT_TOKEN_URL}/${LOBCDER_LONG_TOKEN} 2>/dev/null`
     export COUNTER=10
 
