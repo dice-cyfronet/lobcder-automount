@@ -35,6 +35,13 @@ parse_ticket()
 
 [ -r /etc/lobcderd/parse_ticket.sh ] && . /etc/lobcderd/parse_ticket.sh
 
+short_token()
+{
+    echo `curl ${LOBCDER_SHORT_TOKEN_URL}/$1 2>/dev/null`
+}
+
+[ -r /etc/lobcderd/short_token.sh ] && . /etc/lobcderd/short_token.sh
+
 check_if_mounted()
 {
     if mount | grep ${LOBCDER_DIR} > /dev/null; then
@@ -46,9 +53,9 @@ check_if_mounted()
 
 mount_lobcder()
 {
-    export LOBCDER_LONG_TOKEN=$(get_ticket ${LOBCDER_USER_DATA_URL})
-    export LOBCDER_LONG_TOKEN=$(parse_ticket ${LOBCDER_LONG_TOKEN})
-    export LOBCDER_TOKEN=`curl ${LOBCDER_SHORT_TOKEN_URL}/${LOBCDER_LONG_TOKEN} 2>/dev/null`
+    export LOBCDER_TICKET=$(get_ticket)
+    export LOBCDER_LONG_TOKEN=$(parse_ticket ${LOBCDER_TICKET})
+    export LOBCDER_TOKEN=$(short_token ${LOBCDER_LONG_TOKEN})
     export COUNTER=10
 
     if [ ! -d "${LOBCDER_DIR}" ]; then

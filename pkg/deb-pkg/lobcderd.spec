@@ -9,6 +9,7 @@ Files: lobcderd.conf /etc/default
     lobcderd /etc/init.d
     get_ticket.sh /etc/lobcderd
     parse_ticket.sh /etc/lobcderd
+    short_token.sh /etc/lobcderd
 
 File: postinst
     #!/bin/sh
