@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# chkconfig: 2345 99 00
+# description: Mount LOBCDER at boot time
+
 ### BEGIN INIT INFO
 # Provides:          lobcderd
 # Required-Start:    $remote_fs $syslog
@@ -12,7 +15,7 @@
 
 # Author: Pawel Suder <pawel@suder.info>
 
-. /lib/lsb/init-functions
+. /etc/init.d/functions
 
 export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
 export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
