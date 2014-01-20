@@ -3,7 +3,7 @@ Priority: optional
 Package: lobcderd
 Version: 0.0.1
 Maintainer: Pawel Suder <pawel@suder.info>
-Depends: davfs2
+Depends: davfs2, curl
 Architecture: all
 Files: lobcderd.conf /etc/default
     lobcderd /etc/init.d
