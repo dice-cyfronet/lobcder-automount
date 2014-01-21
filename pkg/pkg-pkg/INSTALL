@@ -3,7 +3,6 @@ post_install() {
     modprobe fuse
     modprobe coda
     systemctl enable lobcderd
-    systemctl start lobcderd
 }
 
 pre_remove() {
