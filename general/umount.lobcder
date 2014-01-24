@@ -1,0 +1,40 @@
+#!/bin/sh
+
+get_param() {
+    echo $1 | sed -e 's/^[^=]*=//g'
+}
+
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help)
+            echo "options:"
+            echo "-h, --help                        show this help"
+            echo "    --lobcder-url=URL             LOBCDER url (optional)"
+            echo "    --mount-point=DIR             mount point (optional)"
+            exit 0
+            ;;
+        --lobcder-url*)
+            export LOBCDER_MOUNT_URL=`get_param $1`
+            shift
+            ;;
+        --mount-point*)
+            export LOBCDER_DIR=`get_param $1`
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+if [ -z "${LOBCDER_MOUNT_URL}" ]; then
+    if [ -z "${LOBCDER_DIR}" ]; then
+        echo "No mount point and lobcder url specified"
+    else
+        umount ${LOBCDER_DIR} > /dev/null 2>&1
+    fi
+else
+    umount ${LOBCDER_MOUNT_URL} > /dev/null 2>&1
+fi
+
+exit 0

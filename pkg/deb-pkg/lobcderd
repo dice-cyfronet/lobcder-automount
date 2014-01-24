@@ -19,7 +19,7 @@ export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
 export LOBCDER_MOUNT_URL=http://149.156.10.138:8080/lobcder/dav
 export LOBCDER_DIR=/media/lobcder
 
-[ -r /etc/default/lobcderd.conf ] && . /etc/default/lobcderd.conf
+[ -r /etc/lobcderd/lobcderd.conf ] && . /etc/lobcderd/lobcderd.conf
 
 get_ticket()
 {

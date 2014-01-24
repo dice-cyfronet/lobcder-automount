@@ -1,0 +1,137 @@
+#!/bin/sh
+
+export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
+export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
+
+[ -r /etc/lobcderd/lobcderd.conf ] && . /etc/lobcderd/lobcderd.conf
+
+unset LOBCDER_MOUNT_URL
+unset LOBCDER_DIR
+
+get_ticket()
+{
+    echo `curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
+}
+
+[ -r /etc/lobcderd/get_ticket.sh ] && . /etc/lobcderd/get_ticket.sh
+
+parse_ticket()
+{
+    echo $1
+}
+
+[ -r /etc/lobcderd/parse_ticket.sh ] && . /etc/lobcderd/parse_ticket.sh
+
+short_token()
+{
+    echo `curl ${LOBCDER_SHORT_TOKEN_URL}/$1 2>/dev/null`
+}
+
+[ -r /etc/lobcderd/short_token.sh ] && . /etc/lobcderd/short_token.sh
+
+check_if_mounted()
+{
+    if mount | grep ${LOBCDER_DIR} > /dev/null; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+get_param() {
+    echo $1 | sed -e 's/^[^=]*=//g'
+}
+
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help)
+            echo "options:"
+            echo "-h, --help                        show this help"
+            echo "    --lobcder-url=URL             LOBCDER url"
+            echo "    --mount-point=DIR             mount point"
+            echo "    --ticket=TICKET               ticket (optional)"
+            echo "    --token=TOKEN                 long token (optional)"
+            echo "    --short-token=SHORT_TOKEN     token (optional)"
+            exit 0
+            ;;
+        --lobcder-url*)
+            export LOBCDER_MOUNT_URL=`get_param $1`
+            shift
+            ;;
+        --mount-point*)
+            export LOBCDER_DIR=`get_param $1`
+            shift
+            ;;
+        --ticket*)
+            export LOBCDER_TICKET=`get_param $1`
+            shift
+            ;;
+        --token*)
+            export LOBCDER_LONG_TOKEN=`get_param $1`
+            shift
+            ;;
+        --short-token*)
+            export LOBCDER_TOKEN=`get_param $1`
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+if [ -z "${LOBCDER_MOUNT_URL}" ]; then
+    echo "No LOBCDER url specified"
+    exit 1
+fi
+
+if [ -z "${LOBCDER_DIR}" ]; then
+    echo "No mount point specified"
+    exit 1
+fi
+
+if check_if_mounted
+then
+    if [ -z "${LOBCDER_TOKEN}" ]; then
+        if [ -z "${LOBCDER_LONG_TOKEN}" ]; then
+            if [ -z "${LOBCDER_TICKET}" ]; then
+                echo -n "Getting ticket... "
+                export LOBCDER_TICKET=$(get_ticket)
+            fi
+            echo -n "Parsing ticket... "
+            export LOBCDER_LONG_TOKEN=$(parse_ticket ${LOBCDER_TICKET})
+        fi
+        echo -n "Shorting token... "
+        export LOBCDER_TOKEN=$(short_token ${LOBCDER_LONG_TOKEN})
+    fi
+
+    if [ ! -d "${LOBCDER_DIR}" ]; then
+        echo -n "Create ${LOBCDER_DIR}... "
+        mkdir -p ${LOBCDER_DIR}
+    fi
+
+    echo -n "Mouting... "
+
+    export COUNTER=10
+    while check_if_mounted && [ ${COUNTER} -gt 0 ]
+    do
+        echo -n ". "
+        echo "user
+$LOBCDER_TOKEN
+" | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} > /dev/null 2>&1
+        sleep 1
+        let COUNTER=COUNTER-1
+    done
+
+    if check_if_mounted
+    then
+        echo "not mounted."
+    else
+        echo "mounted."
+    fi
+else
+    echo "Mounted."
+    exit 1
+fi
+
+exit 0

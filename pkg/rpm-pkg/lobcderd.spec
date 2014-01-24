@@ -17,10 +17,9 @@ install -m 0755 -d $RPM_BUILD_ROOT/etc/lobcderd
 install -m 0755 get_ticket.sh $RPM_BUILD_ROOT/etc/lobcderd/get_ticket.sh
 install -m 0755 parse_ticket.sh $RPM_BUILD_ROOT/etc/lobcderd/parse_ticket.sh
 install -m 0755 short_token.sh $RPM_BUILD_ROOT/etc/lobcderd/short_token.sh
+install -m 0644 lobcderd.conf $RPM_BUILD_ROOT/etc/lobcderd/lobcderd.conf
 install -m 0755 -d $RPM_BUILD_ROOT/etc/init.d
 install -m 0755 lobcderd $RPM_BUILD_ROOT/etc/init.d/lobcderd
-install -m 0755 -d $RPM_BUILD_ROOT/etc/default
-install -m 0644 lobcderd.conf $RPM_BUILD_ROOT/etc/default/lobcderd.conf
 %clean
 rm -rf $RPM_BUILD_ROOT
 %post

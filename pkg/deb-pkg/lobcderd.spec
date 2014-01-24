@@ -5,24 +5,24 @@ Version: 0.0.1
 Maintainer: Pawel Suder <pawel@suder.info>
 Depends: davfs2, curl
 Architecture: all
-Files: lobcderd.conf /etc/default
-    lobcderd /etc/init.d
-    get_ticket.sh /etc/lobcderd
-    parse_ticket.sh /etc/lobcderd
-    short_token.sh /etc/lobcderd
+Files: ./lobcderd /etc/init.d
+ ./lobcderd.conf /etc/lobcderd
+ ./get_ticket.sh /etc/lobcderd
+ ./parse_ticket.sh /etc/lobcderd
+ ./short_token.sh /etc/lobcderd
 
 File: postinst
-    #!/bin/sh
-    update-rc.d lobcderd defaults
-    service lobcderd start
+ #!/bin/sh -e
+ update-rc.d lobcderd defaults
+ service lobcderd start
 
 File: prerm
-    #!/bin/sh
-    service lobcderd stop
+ #!/bin/sh -e
+ service lobcderd stop
 
 File: postrm
-    #!/bin/sh
-    update-rc.d -f lobcderd remove
+ #!/bin/sh -e
+ update-rc.d -f lobcderd remove
 
 Description: Automount LOBCDER VPH-Share resource
  Provide automount scripts to mount LOBCDER resource via davfs.
