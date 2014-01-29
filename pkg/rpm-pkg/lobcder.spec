@@ -6,7 +6,7 @@ Source0: lobcder-0.0.1.tar.gz
 License: GPL
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-buildroot
-Requires: davfs2, curl
+Requires: davfs2, curl, neon
 %description
 Provide automount scripts to mount LOBCDER resource via davfs.
 %prep

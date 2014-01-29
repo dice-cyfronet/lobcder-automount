@@ -52,6 +52,7 @@ while test $# -gt 0; do
             echo "    --ticket=TICKET               ticket (optional)"
             echo "    --token=TOKEN                 long token (optional)"
             echo "    --short-token=SHORT_TOKEN     token (optional)"
+            echo "-o                                mount options (optional)"
             exit 0
             ;;
         --lobcder-url*)
@@ -72,6 +73,16 @@ while test $# -gt 0; do
             ;;
         --short-token*)
             export LOBCDER_TOKEN=`get_param $1`
+            shift
+            ;;
+        -o)
+            shift
+            if test $# -gt 0; then
+                    export LOBCDER_OPTION=$1
+            else
+                    echo "no options specified"
+                    exit 1
+            fi
             shift
             ;;
         *)
@@ -116,9 +127,15 @@ then
     while check_if_mounted && [ ${COUNTER} -gt 0 ]
     do
         echo -n ". "
-        echo "user
+        if [ -z "${LOBCDER_OPTION}" ]; then
+            echo "user
 $LOBCDER_TOKEN
 " | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} > /dev/null 2>&1
+        else
+            echo "user
+$LOBCDER_TOKEN
+" | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} -o ${LOBCDER_OPTION} > /dev/null 2>&1
+        fi
         sleep 1
         let COUNTER=COUNTER-1
     done
