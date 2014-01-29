@@ -21,6 +21,8 @@ export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
 export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
 export LOBCDER_MOUNT_URL=http://149.156.10.138:8080/lobcder/dav
 export LOBCDER_DIR=/media/lobcder
+export LOBCDER_UID=root
+export LOBCDER_GID=root
 
 [ -r /etc/lobcder/lobcder.conf ] && . /etc/lobcder/lobcder.conf
 
@@ -70,7 +72,7 @@ mount_lobcder()
         echo -n ". "
         echo "user
 $LOBCDER_TOKEN
-" | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} > /dev/null 2>&1
+" | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} -o uid=${LOBCDER_UID},gid=${LOBCDER_GID} > /dev/null 2>&1
         sleep 1
         let COUNTER=COUNTER-1
     done
