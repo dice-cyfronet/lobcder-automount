@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
-equivs-build lobcderd.spec
-lintian lobcderd*.deb
+equivs-build lobcder.spec
+lintian lobcder*.deb

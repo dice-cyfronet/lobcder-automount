@@ -1,37 +1,46 @@
 #! /bin/bash
 
+### BEGIN INIT INFO
+# Provides:          lobcder
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Mount LOBCDER at boot time
+# Description:       Allow to use VPH-Share resource file system.
+### END INIT INFO
+
 # Author: Pawel Suder <pawel@suder.info>
 
-[ -r /etc/rc.conf ] && . /etc/rc.conf
-[ -r /etc/rc.d/functions ] && . /etc/rc.d/functions
+. /lib/lsb/init-functions
 
 export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
 export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
 export LOBCDER_MOUNT_URL=http://149.156.10.138:8080/lobcder/dav
 export LOBCDER_DIR=/media/lobcder
 
-[ -r /etc/lobcderd/lobcderd.conf ] && . /etc/lobcderd/lobcderd.conf
+[ -r /etc/lobcder/lobcder.conf ] && . /etc/lobcder/lobcder.conf
 
 get_ticket()
 {
     echo `curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
 }
 
-[ -r /etc/lobcderd/get_ticket.sh ] && . /etc/lobcderd/get_ticket.sh
+[ -r /etc/lobcder/get_ticket.sh ] && . /etc/lobcder/get_ticket.sh
 
 parse_ticket()
 {
     echo $1
 }
 
-[ -r /etc/lobcderd/parse_ticket.sh ] && . /etc/lobcderd/parse_ticket.sh
+[ -r /etc/lobcder/parse_ticket.sh ] && . /etc/lobcder/parse_ticket.sh
 
 short_token()
 {
     echo `curl ${LOBCDER_SHORT_TOKEN_URL}/$1 2>/dev/null`
 }
 
-[ -r /etc/lobcderd/short_token.sh ] && . /etc/lobcderd/short_token.sh
+[ -r /etc/lobcder/short_token.sh ] && . /etc/lobcder/short_token.sh
 
 check_if_mounted()
 {

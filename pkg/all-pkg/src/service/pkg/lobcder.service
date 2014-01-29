@@ -1,0 +1,14 @@
+# systemd service file for lobcderd
+
+[Unit]
+Description=Automount LOBCDER VPH-Share resource
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/lobcder start
+ExecStop=/usr/sbin/lobcder stop
+ExecReload=/usr/sbin/lobcder restart
+
+[Install]
+WantedBy=multi-user.target
