@@ -130,10 +130,12 @@ then
         if [ -z "${LOBCDER_OPTION}" ]; then
             echo "user
 $LOBCDER_TOKEN
+y
 " | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} > /dev/null 2>&1
         else
             echo "user
 $LOBCDER_TOKEN
+y
 " | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} -o ${LOBCDER_OPTION} > /dev/null 2>&1
         fi
         sleep 1

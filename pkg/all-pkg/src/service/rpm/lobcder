@@ -72,6 +72,7 @@ mount_lobcder()
         echo -n ". "
         echo "user
 $LOBCDER_TOKEN
+y
 " | mount.davfs ${LOBCDER_MOUNT_URL} ${LOBCDER_DIR} -o uid=${LOBCDER_UID},gid=${LOBCDER_GID} > /dev/null 2>&1
         sleep 1
         let COUNTER=COUNTER-1
