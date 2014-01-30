@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export VERSION=0.0.2
+export VERSION=0.0.3
 
 tar zcvf lobcder-${VERSION}.tar.gz ./lobcder/
 

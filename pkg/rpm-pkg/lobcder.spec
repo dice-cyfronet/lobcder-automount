@@ -1,8 +1,8 @@
 Summary: Automount LOBCDER VPH-Share resource
 Name: lobcder
-Version: 0.0.1
+Version: 0.0.3
 Release: 1
-Source0: lobcder-0.0.1.tar.gz
+Source0: lobcder-0.0.3.tar.gz
 License: GPL
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-buildroot

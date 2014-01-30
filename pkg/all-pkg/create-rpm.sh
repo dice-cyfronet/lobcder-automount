@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export VERSION=0.0.2
+export VERSION=0.0.3
 
 export CURRENT_DIR=`pwd`
 export TEMP_DIR=`mktemp -d`

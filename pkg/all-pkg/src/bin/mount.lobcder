@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export LOBCDER_USER_DATA_URL=http://169.254.169.254/openstack/latest/user_data
-export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
+export LOBCDER_SHORT_TOKEN_URL=https://lobcder.vph.cyfronet.pl/lobcder/urest/getshort
 
 [ -r /etc/lobcderd/lobcderd.conf ] && . /etc/lobcderd/lobcderd.conf
 

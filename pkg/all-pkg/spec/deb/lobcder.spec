@@ -1,7 +1,7 @@
 Section: misc
 Priority: optional
 Package: lobcder
-Version: 0.0.2
+Version: 0.0.3
 Maintainer: Pawel Suder <pawel@suder.info>
 Depends: davfs2, curl
 Architecture: all
