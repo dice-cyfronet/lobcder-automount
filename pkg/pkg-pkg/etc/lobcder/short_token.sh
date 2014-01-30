@@ -1,6 +1,8 @@
 #!/bin/sh
 
-export LOBCDER_SHORT_TOKEN_URL=http://149.156.10.138:8080/lobcder/urest/getshort
+export LOBCDER_SHORT_TOKEN_URL=https://lobcder.vph.cyfronet.pl/lobcder/urest/getshort
+
+[ -r /etc/lobcder/lobcder.conf ] && . /etc/lobcder/lobcder.conf
 
 short_token()
 {
