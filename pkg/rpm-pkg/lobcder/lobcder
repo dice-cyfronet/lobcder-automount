@@ -28,7 +28,7 @@ export LOBCDER_GID=root
 
 get_ticket()
 {
-    echo `curl ${LOBCDER_USER_DATA_URL} 2>/dev/null`
+    echo `curl --insecure ${LOBCDER_USER_DATA_URL} 2>/dev/null`
 }
 
 [ -r /etc/lobcder/get_ticket.sh ] && . /etc/lobcder/get_ticket.sh
@@ -42,7 +42,7 @@ parse_ticket()
 
 short_token()
 {
-    echo `curl ${LOBCDER_SHORT_TOKEN_URL}/$1 2>/dev/null`
+    echo `curl --insecure ${LOBCDER_SHORT_TOKEN_URL}/$1 2>/dev/null`
 }
 
 [ -r /etc/lobcder/short_token.sh ] && . /etc/lobcder/short_token.sh
