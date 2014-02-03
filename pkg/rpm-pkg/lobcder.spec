@@ -30,8 +30,8 @@ chkconfig --del lobcder
 service lobcder stop
 %files
 %dir /etc/lobcder
+/etc/lobcder/lobcder.conf
 /etc/lobcder/get_ticket.sh
 /etc/lobcder/parse_ticket.sh
 /etc/lobcder/short_token.sh
 /etc/init.d/lobcder
-/etc/lobcder/lobcder.conf
