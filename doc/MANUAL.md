@@ -6,27 +6,27 @@ Simple way
 
 - Boot up a fresh base appliance type from **Applications → My Applications**, eg. *Ubuntu 12.04*.
 
-![Starting development instance](./dump-1.png)
+![Starting development instance](./lobcder-dump-1.png)
 
-![Selecting appliance type](./dump-2.png)
+![Selecting appliance type](./lobcder-dump-2.png)
 
-![Login on machine](./dump-3.png)
+![Login on machine](./lobcder-dump-3.png)
 
 - Login on machine, download and install package `lobcder`.
 
 - Logout and save running virtual machine as a new atomic service.
 
-![Saving atomic service](./dump-4.png)
+![Saving atomic service](./lobcder-dump-4.png)
 
-![Describe name](./dump-5.png)
+![Describe name](./lobcder-dump-5.png)
 
 - Add initial configuration.
     - create new inital configuration which contains only `#{mi_ticket}`
     - `#{mi_ticket}` contains token used to mount LOBCDER resources
 
-![Editing initial configuration](./dump-6.png)
+![Editing initial configuration](./lobcder-dump-6.png)
 
-![Adding initial configuraiont](./dump-7.png)
+![Adding initial configuraiont](./lobcder-dump-7.png)
 
 - Boot up your atomic service with the proper initial configuration.
 - Login on new machine and check if it is mounted by command `mount`.
@@ -34,14 +34,13 @@ Simple way
 Content
 -------
 
-lobcder-automount contains:
+`lobcder` contains:
 
 - `/etc/lobcder` with scripts and config files
     - `lobcder.conf` defines variables used in scripts
-    - `get_ticket.sh` contains function used to download ticket with token from user_data
-    - `parse_ticket.sh` contains function used to parse ticket to get toketn from user_daa
+    - `get_ticket.sh` contains function used to download ticket with token from user data
+    - `parse_ticket.sh` contains function used to parse ticket to get toketn from user data
     - `short_token.sh` contains function to short token
-- `/etc/init.d/lobcder` init config scripts
 
 Variables
 ---------
